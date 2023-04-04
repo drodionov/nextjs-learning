@@ -1,4 +1,6 @@
 import MeetupDetails from "../../components/meetups/MeetupDetails";
+import {MongoClient, ObjectId} from "mongodb";
+
 
 const MeetupDetailsPage = ({meetupData}) => {
   return <MeetupDetails
@@ -10,15 +12,17 @@ const MeetupDetailsPage = ({meetupData}) => {
 }
 
 export const getStaticPaths = async () => {
+  const client = await MongoClient.connect(
+      'mongodb://localhost:27017/meetups')
+  const db = client.db()
+
+  const meetups = db.collection('meetups')
+  const ids = await meetups.distinct('_id')
+  await client.close()
+
   return {
     fallback: true,
-    paths: [
-      {
-        params: {
-          meetupId: 'm1'
-        }
-      }
-    ]
+    paths: ids.map((id) => ({params: {meetupId: id.toString()}}))
   }
 
 }
@@ -26,13 +30,21 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   console.log("Path: " + context.params.meetupId)
 
+  const client = await MongoClient.connect(
+      'mongodb://localhost:27017/meetups')
+  const db = client.db()
+
+  const meetups = db.collection('meetups')
+  const meetup = await meetups.findOne({_id: new ObjectId(context.params.meetupId)})
+  await client.close()
+  console.log("Meetup: " + meetup)
   return {
     props: {
       meetupData: {
-        image: 'https://upload.wikimedia.org/wikipedia/commons/1/16/Skyscrapers_in_Izmir_-_Turkey.jpg',
-        title: 'Dummy Meetup',
-        address: 'Some Address, Building 5, 36500',
-        description: 'Some long long long long long long long long long long long long long description about this wonderful meetup'
+        image: meetup.image,
+        title: meetup.title,
+        address: meetup.address,
+        description: meetup.description
       }
     }
 
