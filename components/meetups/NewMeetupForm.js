@@ -9,7 +9,7 @@ const NewMeetupForm = (props) => {
   const addressInputRef = useRef()
   const descriptionInputRef = useRef()
 
-  function submitHandler(event) {
+  const submitHandler = (event) => {
     event.preventDefault()
 
     const enteredTitle = titleInputRef.current.value
