@@ -1,7 +1,7 @@
 import MeetupDetails from "../../components/meetups/MeetupDetails"
 import {ObjectId} from "mongodb"
 import {connectToDatabase} from "../../lib/mongodb"
-import Head from "next/head";
+import Head from "next/head"
 
 const MeetupDetailsPage = ({meetupData}) => {
   return <>
