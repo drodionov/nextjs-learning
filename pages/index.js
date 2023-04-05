@@ -1,21 +1,19 @@
-import MeetupList from "../components/meetups/MeetupList";
-import {MongoClient} from "mongodb";
+import MeetupList from "../components/meetups/MeetupList"
+import {connectToDatabase} from "../lib/mongodb"
 
 const HomePage = (props) => {
   return <MeetupList meetups={props.meetups}/>
 }
 
 export const getStaticProps = async () => {
-  const client = await MongoClient.connect(
-      'mongodb://localhost:27017/meetups')
-  const db = client.db()
+  const {client, db} = await connectToDatabase()
 
   const meetups = db.collection('meetups')
   const meetupsData = await meetups.find().toArray()
   meetupsData.forEach(meetup => {
     meetup.id = meetup._id.toString()
   })
-  console.log("Mapped data: " + JSON.stringify(meetupsData))
+
   await client.close()
   return {
     props: {

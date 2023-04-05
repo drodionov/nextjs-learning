@@ -1,6 +1,6 @@
-import MeetupDetails from "../../components/meetups/MeetupDetails";
-import {MongoClient, ObjectId} from "mongodb";
-
+import MeetupDetails from "../../components/meetups/MeetupDetails"
+import {MongoClient, ObjectId} from "mongodb"
+import {connectToDatabase} from "../../lib/mongodb"
 
 const MeetupDetailsPage = ({meetupData}) => {
   return <MeetupDetails
@@ -30,14 +30,13 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   console.log("Path: " + context.params.meetupId)
 
-  const client = await MongoClient.connect(
-      'mongodb://localhost:27017/meetups')
-  const db = client.db()
+  const {client, db} = await connectToDatabase()
 
   const meetups = db.collection('meetups')
-  const meetup = await meetups.findOne({_id: new ObjectId(context.params.meetupId)})
+  const meetup = await meetups.findOne(
+      {_id: new ObjectId(context.params.meetupId)})
   await client.close()
-  console.log("Meetup: " + meetup)
+
   return {
     props: {
       meetupData: {
