@@ -19,11 +19,10 @@ const MeetupDetailsPage = ({meetupData}) => {
 }
 
 export const getStaticPaths = async () => {
-  const {client, db} = await connectToDatabase()
+  const {db} = await connectToDatabase()
 
   const meetups = db.collection('meetups')
   const ids = await meetups.distinct('_id')
-  await client.close()
 
   return {
     fallback: true,
@@ -35,13 +34,11 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   console.log("Path: " + context.params.meetupId)
 
-  const {client, db} = await connectToDatabase()
+  const {db} = await connectToDatabase()
 
   const meetups = db.collection('meetups')
   const meetup = await meetups.findOne(
       {_id: new ObjectId(context.params.meetupId)})
-  await client.close()
-
   return {
     props: {
       meetupData: {

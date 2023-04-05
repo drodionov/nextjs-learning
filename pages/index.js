@@ -14,7 +14,7 @@ const HomePage = (props) => {
 }
 
 export const getStaticProps = async () => {
-  const {client, db} = await connectToDatabase()
+  const {db} = await connectToDatabase()
 
   const meetups = db.collection('meetups')
   const meetupsData = await meetups.find().toArray()
@@ -22,7 +22,6 @@ export const getStaticProps = async () => {
     meetup.id = meetup._id.toString()
   })
 
-  await client.close()
   return {
     props: {
       meetups: meetupsData.map((data) => ({
