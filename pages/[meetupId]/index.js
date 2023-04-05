@@ -4,9 +4,6 @@ import {connectToDatabase} from "../../lib/mongodb"
 import Head from "next/head"
 
 const MeetupDetailsPage = ({meetupData}) => {
-  // if (!meetupData) {
-  //   return <p>Loading...</p>
-  // }
   return <>
     <Head>
       <title>{meetupData.title}</title>

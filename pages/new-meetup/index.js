@@ -1,6 +1,6 @@
-import NewMeetupForm from "../../components/meetups/NewMeetupForm";
-import {useRouter} from "next/router";
-import Head from "next/head";
+import NewMeetupForm from "../../components/meetups/NewMeetupForm"
+import {useRouter} from "next/router"
+import Head from "next/head"
 
 const NewMeetupPage = () => {
   const router = useRouter()
@@ -11,7 +11,7 @@ const NewMeetupPage = () => {
       headers: {
         'Content-type': 'application/json'
       }
-    });
+    })
     await router.push('/')
   }
 

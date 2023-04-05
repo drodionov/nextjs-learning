@@ -20,4 +20,4 @@ const MainNavigation = () => {
   )
 }
 
-export default MainNavigation;
+export default MainNavigation

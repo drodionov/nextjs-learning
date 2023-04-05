@@ -1,6 +1,6 @@
 import MeetupList from "../components/meetups/MeetupList"
 import {connectToDatabase} from "../lib/mongodb"
-import Head from "next/head";
+import Head from "next/head"
 
 const HomePage = (props) => {
   return <>
