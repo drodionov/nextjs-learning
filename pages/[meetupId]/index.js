@@ -25,7 +25,7 @@ export const getStaticPaths = async () => {
   const ids = await meetups.distinct('_id')
 
   return {
-    fallback: false,
+    fallback: 'blocking',
     paths: ids.map((id) => ({params: {meetupId: id.toString()}}))
   }
 }
