@@ -13,6 +13,9 @@
   color: white;
   font-weight: bold;
 }
+.logo:hover {
+  cursor: pointer;
+}
 
 .header ul {
   list-style: none;
