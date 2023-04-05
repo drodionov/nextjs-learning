@@ -4,9 +4,9 @@ import {connectToDatabase} from "../../lib/mongodb"
 import Head from "next/head"
 
 const MeetupDetailsPage = ({meetupData}) => {
-  if (!meetupData) {
-    return <p>Loading...</p>
-  }
+  // if (!meetupData) {
+  //   return <p>Loading...</p>
+  // }
   return <>
     <Head>
       <title>{meetupData.title}</title>
@@ -28,10 +28,9 @@ export const getStaticPaths = async () => {
   const ids = await meetups.distinct('_id')
 
   return {
-    fallback: true,
+    fallback: false,
     paths: ids.map((id) => ({params: {meetupId: id.toString()}}))
   }
-
 }
 
 export const getStaticProps = async (context) => {
