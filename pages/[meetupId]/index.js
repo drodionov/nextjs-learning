@@ -1,5 +1,5 @@
 import MeetupDetails from "../../components/meetups/MeetupDetails"
-import {MongoClient, ObjectId} from "mongodb"
+import {ObjectId} from "mongodb"
 import {connectToDatabase} from "../../lib/mongodb"
 import Head from "next/head";
 
@@ -19,9 +19,7 @@ const MeetupDetailsPage = ({meetupData}) => {
 }
 
 export const getStaticPaths = async () => {
-  const client = await MongoClient.connect(
-      'mongodb://localhost:27017/meetups')
-  const db = client.db()
+  const {client, db} = await connectToDatabase()
 
   const meetups = db.collection('meetups')
   const ids = await meetups.distinct('_id')
